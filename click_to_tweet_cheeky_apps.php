@@ -1,11 +1,11 @@
 <?php
 /*
-	Plugin Name: Easy Click to Tweet & Tweet Boxes by Cheeky Apps
-	Plugin URI: https://cheekyapps.com/SEO-Friendly-Title
-	Description: Create a Beautiful and Tweet Boxes in Less Than 5 Minutes with Easy Click to Tweet & Tweet Boxes by Cheeky Apps. Drive more social media traffic to your website & Give your readers a better way to engage with your content.No Coding Required.
+	Plugin Name: Easy Click to Tweet Boxes by Cheeky Apps
+	Plugin URI: http://cheekyapps.com/easy-to-tweet-waiting-list/
+	Description: Create Beautiful Tweet Boxes in Less Than 5 Minutes with Easy Click to Tweet by Cheeky Apps. Similar to "Tweet This", you'll be able to drive more social media traffic to your website & Give your readers a better way to engage with your content. No Coding Required.
 	Author: Scott Moses
 	Version: 1.0
-	Author URI: https://cheekyapps.com
+	Author URI: https://CheekyApps.com
 */
 
 if ( ! defined('ABSPATH')){

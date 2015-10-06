@@ -98,7 +98,7 @@
 		}
 
 		function ca_redirect_upgrade_page() {
-			wp_redirect( 'http://google.com', 301 );
+			wp_redirect( 'http://cheekyapps.com/easy-to-tweet-waiting-list/', 301 );
 			exit;
 		}
 		add_action( 'load-click-to-tweet_page_stuff-to-tweet2', 'ca_redirect_upgrade_page' );
@@ -155,7 +155,7 @@ add_action( 'admin_footer', 'dh_ptp_upgrade_to_premium_menu_js');
 			<h3 class="text">Upgrade to Pro and Drive More Twitter Traffic to Your Site!</h3>
 				<ul>	
 					<!-- Can I remove the PTP_LOC?  -->
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Remove "Powered By CheekyApps.com"' ); ?></li>
+					
                     <li><div class="dashicons dashicons-yes"></div> <?php _e( 'More Gorgeous Designs' ); ?></li>
                     <li><div class="dashicons dashicons-yes"></div> <?php _e( 'Priority Email Support' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Access to "Highlight to Tweet"' ); ?></li>
@@ -163,7 +163,7 @@ add_action( 'admin_footer', 'dh_ptp_upgrade_to_premium_menu_js');
 				</ul>
 				
 				<p style="text-align: center;">
-					<a class="button button-primary button-large" target="_blank" href="Http://www.Google.com">Get On The Waiting List</a>
+					<a class="button button-primary button-large" target="_blank" href="http://cheekyapps.com/easy-to-tweet-waiting-list/">Get On The Waiting List</a>
 				</p>
 			<?php
 		}

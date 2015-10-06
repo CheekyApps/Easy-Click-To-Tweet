@@ -48,7 +48,7 @@
         },
         getInfo: function() {
             return {
-                longname: "Easy Click To Tweet",
+                longname: "Easy Click To Tweet Boxes",
                 author: 'CheekyApps',
                 authorurl: 'http://CheeyApps.com/',
                 infourl: 'http://CheekyApps.com/click-to-tweet-plugin',

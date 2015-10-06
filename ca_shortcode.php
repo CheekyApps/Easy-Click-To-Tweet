@@ -43,7 +43,7 @@ function ca_click_to_tweet_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'ca_click_to_tweet_enqueue_scripts' );
 
-// Powered By for the basic-white theme 
+// text for the basic-white theme 
 
 function ca_override_basic_white_tweet_shortcode( $return, $theme, $content, $atts ) {
 	if ( 'basic-white' == $theme ) {
@@ -57,7 +57,7 @@ function ca_override_basic_white_tweet_shortcode( $return, $theme, $content, $at
 		$tweet_url = 'https://twitter.com/intent/tweet';
 		$tweet_url = add_query_arg( array(
 			'lang' => 'en',
-			'text' => urlencode( $content ),
+			'text' => urlencode( strip_tags( html_entity_decode( $content ) ) )
 		), $tweet_url );
 
 		ob_start(); ?>
@@ -67,7 +67,7 @@ function ca_override_basic_white_tweet_shortcode( $return, $theme, $content, $at
 				<?php echo $content; ?>
 				<span class="ctt-cta">Click to Tweet</span>
 			</a>
-			<a href="http://google.com/" target="_blank" class="powered-by">Powered by CheekyApps.com</a>
+			
 		</div>
 		<?php
 
@@ -80,7 +80,7 @@ function ca_override_basic_white_tweet_shortcode( $return, $theme, $content, $at
 add_filter( 'ca_Tweet_shortcode_html', 'ca_override_basic_white_tweet_shortcode', 10, 4 );
 
 
-// Powered By for the basic-border theme 
+// Text for the basic-border theme 
 
 function ca_override_basic_border_tweet_shortcode( $return, $theme, $content, $atts ) {
 	if ( 'basic-border' == $theme ) {
@@ -94,7 +94,7 @@ function ca_override_basic_border_tweet_shortcode( $return, $theme, $content, $a
 		$tweet_url = 'https://twitter.com/intent/tweet';
 		$tweet_url = add_query_arg( array(
 			'lang' => 'en',
-			'text' => urlencode( $content ),
+			'text' => urlencode( strip_tags( html_entity_decode( $content ) ) )
 		), $tweet_url );
 
 		ob_start(); ?>
@@ -104,7 +104,7 @@ function ca_override_basic_border_tweet_shortcode( $return, $theme, $content, $a
 				<span class="text-wrap"><?php echo $content; ?></span>
 				<span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>
 			</a>
-			<a href="http://google.com/" target="_blank" class="blue-powered-by">Powered by CheekyApps.com</a>
+			
 		</div>
 		<?php
 
@@ -116,7 +116,7 @@ function ca_override_basic_border_tweet_shortcode( $return, $theme, $content, $a
 }
 add_filter( 'ca_Tweet_shortcode_html', 'ca_override_basic_border_tweet_shortcode', 10, 4 );
 
-// Powered By for the basic-full theme 
+//  basic-full theme text 
 
 
 function ca_override_basic_full_powered_by_shortcode( $return, $theme, $content, $atts ) {
@@ -131,7 +131,7 @@ function ca_override_basic_full_powered_by_shortcode( $return, $theme, $content,
 		$tweet_url = 'https://twitter.com/intent/tweet';
 		$tweet_url = add_query_arg( array(
 			'lang' => 'en',
-			'text' => urlencode( $content ),
+			'text' => urlencode( strip_tags( html_entity_decode( $content ) ) )
 		), $tweet_url );
 
 		ob_start(); ?>
@@ -140,7 +140,7 @@ function ca_override_basic_full_powered_by_shortcode( $return, $theme, $content,
 				<span class="text-wrap"><?php echo $content; ?></span>
 				<span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>
 			</a>
-			<a href="http://google.com/" target="_blank" class="powered-by">Powered by CheekyApps.com</a>
+			
 		</div>
 		<?php
 
@@ -166,17 +166,17 @@ function ca_override_basic_full_tweet_shortcode( $return, $theme, $content, $att
 		$tweet_url = 'https://twitter.com/intent/tweet';
 		$tweet_url = add_query_arg( array(
 			'lang' => 'en',
-			'text' => urlencode( $content ),
+			'text' => urlencode( strip_tags( html_entity_decode( $content ) ) )
 		), $tweet_url );
 
 		ob_start(); ?>
 		<div class="<?php echo esc_attr( $classes ); ?>">
 	<!-- 	change to that werid twitter link -->
 			<a href="<?php echo esc_url( $tweet_url ); ?>" class="tweet-link" target="_blank">
-				<?php echo $content; ?>
+				<?php echo wp_filter_nohtml_kses($content) ; ?>
 				<span class="ctt-cta">Click to Tweet</span>
 			</a>
-			<a href="http://google.com/" target="_blank" class="powered-by">Powered by CheekyApps.com</a>
+			
 		</div>
 		<?php
 
