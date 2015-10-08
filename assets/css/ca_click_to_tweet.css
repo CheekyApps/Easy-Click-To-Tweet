@@ -36,6 +36,10 @@
 	
 }
 
+.click-to-tweet .tweet-link {
+	white-space: normal;
+}
+
 .click-to-tweet.ctt-theme-basic-white .tweet-link {
 	color: #e2e2ea;
 	/*border-color: #e2e2ea;*/
@@ -300,6 +304,12 @@
 	color: #28aae1;
 	text-decoration: underline;	
 	
+}
+
+.mce-container-body.danger .tweet-link {
+	color: #B92929;
+	border-color: #B92929;
+	background-color: #D29C9C;
 }
 
 /*full ends here*/
