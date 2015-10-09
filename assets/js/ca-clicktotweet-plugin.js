@@ -1,26 +1,43 @@
 (function() {
+
+    /**
+     * Maximum allowed characters
+     */
+    var maxLength = 140;
+
+    /**
+     * List of available styles.
+     * The value is used for the tweet class, e.g.: .click-to-tweet.ctt-theme-basic-white
+     */
+    var previewStyles = [
+        { text: 'Basic White Skin', value: 'basic-white', selected: true },
+        { text: 'Basic Full Skin', value: 'basic-full' },
+        { text: 'Basic Border', value: 'basic-border' }
+    ];
+
     tinymce.create('tinymce.plugins.CAClickToTweet', {
         init: function(ed, url) {
             console.log( url );
 
             jQuery('<link/>', {href: '../wp-content/plugins/Easy-Click-To-Tweet/assets/css/ca_click_to_tweet.css', rel: 'stylesheet'}).appendTo('head');
 
-            var maxLength = 30; // maximum allowed characters
+            /**
+             *   Definitions:
+             *   $body - popup body
+             *       $previewContainer - div.click-to-tweet.ctt-theme-basic-white - the preview container
+             *           $previewText - a.tweet-link - preview text
+             *           $counterContainer - div.click-to-tweet-counter-container
+             *               $counter - span.click-to-tweet-counter - number of characters text
+             * 
+             */
 
-            var $input; // tweet input
-            var $preview = jQuery('<div/>', { "class":"click-to-tweet ctt-theme-basic-white", id:"CAClickToTweetPreview" }); // preview container
-            var $previewText = jQuery('<a/>', { "class": "tweet-link" });
-            $previewText.appendTo($preview);
-            var $counter = jQuery('<div/>', { id: "CAClickToTweetCounter" }); // counter element
             var $body; // popup body
-            var len; // length of the tweet
-            var danger; // maximum allowed characters exceeded
-
-            // temporary add style
-            $preview.add($counter).css({
-                position: 'absolute', bottom: 0
-            });
-            $counter.css({ right: 0 });
+            var $input; // tweet input
+            var $previewContainer = jQuery('<div/>', { "class":"click-to-tweet ctt-theme-basic-white" });
+            var $previewText = jQuery('<a/>', { "class": "tweet-link" });
+            var $counter = jQuery('<span/>', { "class": "click-to-tweet-counter" });
+            var $counterContainer = jQuery('<div class="click-to-tweet-counter-container"> / '+maxLength+' Characters</div>').prepend($counter);
+            $previewContainer.append( $previewText, $counterContainer);
 
             /**
              * Update the preview text
@@ -37,10 +54,10 @@
              * Update the counter element with the number of entered tweet characters
              */
             var updateCounter = function(){
-                var num = $input.val().length;
-                $counter.html( num );
-                danger = (num > maxLength);
-                danger? $body.addClass('danger') : $body.removeClass('danger');
+                var len = $input.val().length;
+                $counter.html( len );
+                // maximum allowed characters exceeded?
+                (len > maxLength)? $body.addClass('danger') : $body.removeClass('danger');
             };
 
 
@@ -55,7 +72,7 @@
                         initPreview = function(){}; /* make this function only runs once after popup is opened */
                         $input = jQuery(e.target);
                         $body = $input.closest('.mce-window-body');
-                        $body.append( $preview, $counter );
+                        $body.append( $previewContainer );
                     };
 
                     ed.windowManager.open({
@@ -77,17 +94,12 @@
                                 type   : 'listbox',
                                 name   : 'theme',
                                 label  : 'Tweet Box Style',
-                                values : [
-                                    { text: 'Basic White Skin', value: 'basic-white', selected: true },
-                                    { text: 'Basic Full Skin', value: 'basic-full' },
-                                    { text: 'Basic Border', value: 'basic-border' }
-                                ],
+                                values : previewStyles,
                                 onselect: function(e){
-                                    // $preview.removeClass().addClass( this.value() );
-                                    $preview.removeClass (function (index, css) {
+                                    $previewContainer.removeClass (function (index, css) {
                                         return (css.match (/(^|\s)ctt-theme-\S+/g) || []).join(' ');
                                     });
-                                    $preview.addClass( "ctt-theme-"+ this.value() );
+                                    $previewContainer.addClass( "ctt-theme-"+ this.value() );
                                 }
                             }
                         ],
