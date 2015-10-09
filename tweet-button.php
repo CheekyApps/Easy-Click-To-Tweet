@@ -10,9 +10,9 @@
 			}
 		}
 
-		public function __construct() {
-			$this->ca_clicktotweet_button();
-		}
+		// public function __construct() {
+		// 	$this->ca_clicktotweet_button();
+		// }
 
 		public function register_admin_hooks(){
 			// Add button plugin to TinyMCE
