@@ -78,7 +78,7 @@
                     ed.windowManager.open({
                         title: 'Easy Click To Tweet Boxes',
                         width: 700,
-                        minHeight: 300,
+                        minHeight: 240,
                         body: [
                             {
                                 type   : 'textbox',
