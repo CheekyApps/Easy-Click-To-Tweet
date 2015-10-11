@@ -297,6 +297,10 @@
 	position: absolute;
 	bottom: 0;
 }
+.mce-container-body .tweet-link {
+	max-height: 120px;
+	overflow: hidden;
+}
 .mce-container-body .click-to-tweet-counter-container,.mce-container-body .click-to-tweet-counter {
 	line-height: 30px;
 }
