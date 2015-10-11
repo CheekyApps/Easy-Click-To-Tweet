@@ -35,6 +35,7 @@
 
 .click-to-tweet .tweet-link {
 	white-space: normal;
+	text-align: center;
 }
 
 .click-to-tweet.ctt-theme-basic-white .tweet-link {
