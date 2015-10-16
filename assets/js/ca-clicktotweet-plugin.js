@@ -7,17 +7,86 @@
 
     /**
      * List of available styles.
-     * The value is used for the tweet class, e.g.: .click-to-tweet.ctt-theme-basic-white
+     * <span class="text-wrap"></span> - is a required element in a template
      */
-    var previewStyles = [
-        { text: 'Basic White Skin', value: 'basic-white', selected: true },
-        { text: 'Basic Full Skin', value: 'basic-full' },
-        { text: 'Basic Border', value: 'basic-border' }
-    ];
+    var themes = {
+        'basic-white': {
+            title: 'Basic White Skin',
+            pro: false,
+            template: '<div class="click-to-tweet ctt-theme-basic-white">\
+                <a href="#" class="tweet-link">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta">Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'basic-full': {
+            title: 'Basic Full Skin',
+            pro: false,
+            template: '<div class="click-to-tweet ctt-theme-basic-full">\
+                <a href="#" class="tweet-link">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta"><i class="bird-icon"></i>Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'basic-border': {
+            title: 'Basic Border',
+            pro: false,
+            template: '<div class="click-to-tweet ctt-theme-basic-border">\
+                <a href="#" class="tweet-link">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'tweet-block-light-red': {
+            title: 'Tweet Block - Light Red - Pro Only',
+            pro: true,
+            template: '<div class="click-to-tweet ctt-theme-tweet-block-light-red">\
+                <a href="#" class="tweet-link" target="_blank">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'tweet-block-orange': {
+            title: 'Tweet Block - Orange - Pro Only',
+            pro: true,
+            template: '<div class="click-to-tweet ctt-theme-tweet-block-orange">\
+                <a href="#" class="tweet-link">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'tweet-block-violet': {
+            title: 'Tweet Block - Violet - Pro Only',
+            pro: true,
+            template: '<div class="click-to-tweet ctt-theme-tweet-block-violet">\
+                <a href="#" class="tweet-link">\
+                    <span class="text-wrap"></span>\
+                    <span class="ctt-cta"><i class="bird-icon"></i> Click to Tweet</span>\
+                </a>\
+            </div>'
+        },
+        'highlight-tweet': {
+            title: 'Highlight To Tweet -  Pro Only',
+            pro: true,
+            template: '<span class="click-to-tweet ctt-theme-tweet-block-light-red">\
+                <a href="#" class="tweet-link"><span class="text-wrap"></span></a>\
+            </span>'
+        }
+    };
+
+    var themesSelect = [];
+    for( var theme in themes ){
+        var item = { text: themes[theme].title, value: theme };
+        themesSelect.push(item);
+    }
 
     tinymce.create('tinymce.plugins.CAClickToTweet', {
         init: function(ed, url) {
-            console.log( url );
 
             jQuery('<link/>', {href: '../wp-content/plugins/Easy-Click-To-Tweet/assets/css/ca_click_to_tweet.css', rel: 'stylesheet'}).appendTo('head');
 
@@ -33,11 +102,11 @@
 
             var $body; // popup body
             var $input; // tweet input
-            var $previewContainer = jQuery('<div/>', { "class":"click-to-tweet ctt-theme-basic-white" });
-            var $previewText = jQuery('<a/>', { "class": "tweet-link" });
+            var $previewContainer; // jQuery Element of the preview container
+            var $previewText; // jQuery Element for the tweet text
             var $counter = jQuery('<span/>', { "class": "click-to-tweet-counter" });
             var $counterContainer = jQuery('<div class="click-to-tweet-counter-container"> / '+maxLength+' Characters</div>').prepend($counter);
-            $previewContainer.append( $previewText, $counterContainer);
+            var currentTheme = '';
 
             /**
              * Update the preview text
@@ -50,6 +119,25 @@
                 $previewText.html( text );
             };
 
+            var setupStyleContainer = function(themeName){
+                if( currentTheme === themeName ){
+                    return;
+                }
+                if(!themeName){
+                    themeName = themesSelect[0].value;
+                }
+                currentTheme = themeName;
+                if( typeof $previewContainer !== 'undefined'){
+                    $previewContainer.remove();
+                }
+                $previewContainer = jQuery( themes[themeName].template );
+                $previewText = $previewContainer.find('.text-wrap');
+                $previewContainer.append( $counterContainer);
+                $body.append( $previewContainer );
+                updatePreview();
+                updateCounter();
+            }
+
             /**
              * Update the counter element with the number of entered tweet characters
              */
@@ -57,9 +145,12 @@
                 var len = $input.val().length;
                 $counter.html( len );
                 // maximum allowed characters exceeded?
-                (len > maxLength)? $body.addClass('danger') : $body.removeClass('danger');
+                setDanger( len > maxLength || themes[currentTheme].pro );
             };
 
+            var setDanger = function(isDanger){
+                 $body[ isDanger? 'addClass': 'removeClass' ]('danger');
+            }
 
             ed.addButton('ca-clicktotweet', {
                 title: CAClickToTweet.button_title,
@@ -70,10 +161,23 @@
                      */
                     var initPreview = function(e){
                         initPreview = function(){}; /* make this function only runs once after popup is opened */
-                        $input = jQuery(e.target);
-                        $body = $input.closest('.mce-window-body');
-                        $body.append( $previewContainer );
+                        $body = jQuery('.mce-container.mce-panel.mce-floatpanel.mce-window .mce-window-body');
+                        $input = $body.find('.mce-textbox.mce-abs-layout-item');
                     };
+
+
+                    var attemptInitPreview = function(){
+                        if(jQuery('.mce-container.mce-panel.mce-floatpanel.mce-window .mce-window-body').length) {
+                            initPreview();
+                            setupStyleContainer();
+                            $input.val('Enter your tweet here').select();
+                            updatePreview();
+                            updateCounter();
+                        } else {
+                            setTimeout(attemptInitPreview, 50);
+                        }
+                    };
+                    attemptInitPreview();
 
                     ed.windowManager.open({
                         title: 'Easy Click To Tweet Boxes',
@@ -86,7 +190,6 @@
                                 label  : 'Tweet text',
                                 minHeight: '50px',
                                 onkeyup: function(e){
-                                    initPreview(e);
                                     updatePreview();
                                     updateCounter();
                                 }
@@ -94,12 +197,9 @@
                                 type   : 'listbox',
                                 name   : 'theme',
                                 label  : 'Tweet Box Style',
-                                values : previewStyles,
+                                values : themesSelect,
                                 onselect: function(e){
-                                    $previewContainer.removeClass (function (index, css) {
-                                        return (css.match (/(^|\s)ctt-theme-\S+/g) || []).join(' ');
-                                    });
-                                    $previewContainer.addClass( "ctt-theme-"+ this.value() );
+                                    setupStyleContainer(this.value());
                                 }
                             }
                         ],
