@@ -182,7 +182,7 @@
                     ed.windowManager.open({
                         title: 'Easy Click To Tweet Boxes',
                         width: 700,
-                        minHeight: 240,
+                        minHeight: 275,
                         body: [
                             {
                                 type   : 'textbox',
@@ -200,6 +200,14 @@
                                 values : themesSelect,
                                 onselect: function(e){
                                     setupStyleContainer(this.value());
+                                }
+                            }, {
+                                type   : 'button',
+                                name   : 'upgrade',
+                                text   : 'Upgrade to Pro',
+                                onclick: function(e){
+                                    console.log('button click');
+                                    window.open('http://www.cheekyapps.com/','_blank');
                                 }
                             }
                         ],
