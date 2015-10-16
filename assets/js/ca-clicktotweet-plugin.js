@@ -88,7 +88,7 @@
     tinymce.create('tinymce.plugins.CAClickToTweet', {
         init: function(ed, url) {
 
-            jQuery('<link/>', {href: '../wp-content/plugins/Easy-Click-To-Tweet/assets/css/ca_click_to_tweet.css', rel: 'stylesheet'}).appendTo('head');
+            jQuery('<link/>', {href: CAClickToTweet.url + '/assets/css/ca_click_to_tweet.css', rel: 'stylesheet'}).appendTo('head');
 
             /**
              *   Definitions:
