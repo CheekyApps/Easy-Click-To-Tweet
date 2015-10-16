@@ -206,7 +206,6 @@
                                 name   : 'upgrade',
                                 text   : 'Upgrade to Pro',
                                 onclick: function(e){
-                                    console.log('button click');
                                     window.open('http://www.cheekyapps.com/','_blank');
                                 }
                             }
